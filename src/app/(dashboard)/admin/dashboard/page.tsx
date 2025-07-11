@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                                       <div className="text-sm/6 font-medium text-gray-900">{transaction.amount}</div>
                                       <div
                                         className={classNames(
-                                          statuses[transaction.status],
+                                          statuses[transaction.status as keyof typeof statuses] || 'text-gray-600 bg-gray-50 ring-gray-500/10',
                                           'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',
                                         )}
                                       >
@@ -291,7 +291,7 @@ export default function AdminDashboard() {
                           <div className="font-medium text-gray-900">{customer.lastPayment.amount}</div>
                           <div
                             className={classNames(
-                              statuses[customer.lastPayment.status],
+                              statuses[customer.lastPayment.status as keyof typeof statuses] || 'text-gray-600 bg-gray-50 ring-gray-500/10',
                               'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',
                             )}
                           >
