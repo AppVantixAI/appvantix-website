@@ -2,6 +2,8 @@ import clsx from 'clsx'
 
 import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
+import { CheckoutButton } from '@/components/checkout/CheckoutButton'
+import { products } from '@/stripe-config'
 
 function SwirlyDoodle(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -54,14 +56,16 @@ function Plan({
   name,
   price,
   description,
-  href,
+  priceId,
+  mode,
   features,
   featured = false,
 }: {
   name: string
   price: string
   description: string
-  href: string
+  priceId: string
+  mode: 'payment' | 'subscription'
   features: Array<string>
   featured?: boolean
 }) {
@@ -98,20 +102,28 @@ function Plan({
           </li>
         ))}
       </ul>
-      <Button
-        href={href}
-        variant={featured ? 'solid' : 'outline'}
-        color="white"
-        className="mt-8"
-        aria-label={`Get started with the ${name} plan for ${price}`}
+      <CheckoutButton
+        priceId={priceId}
+        mode={mode}
+        className={clsx(
+          'mt-8',
+          featured 
+            ? 'bg-white text-orange-600 hover:bg-gray-50' 
+            : 'border border-white text-white hover:bg-white hover:text-slate-900'
+        )}
       >
         Get started
-      </Button>
+      </CheckoutButton>
     </section>
   )
 }
 
 export function Pricing() {
+  // Filter products for the main pricing display
+  const mainProducts = products.filter(product => 
+    product.name.includes('BoltBridge') || product.name.includes('Website Management')
+  )
+
   return (
     <section
       id="pricing"
@@ -132,49 +144,45 @@ export function Pricing() {
           </p>
         </div>
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
-          <Plan
-            name="App Access"
-            price="$9"
-            description="Perfect for individuals looking to save time with AI-powered apps."
-            href="/register"
-            features={[
-              'Access to 3 premium AI apps',
-              'Basic customer support',
-              'Mobile and desktop versions',
-              'Regular app updates',
-              'Community forum access',
-            ]}
-          />
-          <Plan
-            featured
-            name="Business Suite"
-            price="$29"
-            description="Comprehensive AI solutions for growing businesses."
-            href="/register"
-            features={[
-              'Access to all premium AI apps',
-              'Priority customer support',
-              'Custom SaaS integrations',
-              'Advanced analytics dashboard',
-              'Monthly consultation call',
-              'White-label options available',
-              'API access for integration',
-            ]}
-          />
-          <Plan
-            name="AI Consultation"
-            price="$99"
-            description="Personalized AI strategy and custom development services."
-            href="/register"
-            features={[
-              'Dedicated AI strategy consultant',
-              'Custom AI app development',
-              'Enterprise SaaS solutions',
-              'Unlimited consultation hours',
-              'Implementation support',
-              'Ongoing optimization',
-            ]}
-          />
+          {mainProducts.slice(0, 3).map((product, index) => (
+            <Plan
+              key={product.id}
+              name={product.name}
+              price={product.price === 0 ? 'Free' : `$${product.price}`}
+              description={product.description.split('•')[0].trim()}
+              priceId={product.priceId}
+              mode={product.mode}
+              features={product.description.split('•').slice(1).map(f => f.trim()).filter(Boolean)}
+              featured={index === 1}
+            />
+          ))}
+        </div>
+        
+        {/* Additional products section */}
+        <div className="mt-16">
+          <h3 className="text-center font-display text-2xl tracking-tight text-white mb-8">
+            Additional Services
+          </h3>
+          <div className="grid max-w-4xl mx-auto grid-cols-1 gap-6 md:grid-cols-2">
+            {products.filter(p => !p.name.includes('BoltBridge') && !p.name.includes('Website Management')).map((product) => (
+              <div key={product.id} className="bg-slate-800 rounded-2xl p-6">
+                <h4 className="font-display text-lg text-white mb-2">{product.name}</h4>
+                <p className="text-slate-300 text-sm mb-4">{product.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-2xl text-white">
+                    ${product.price}
+                  </span>
+                  <CheckoutButton
+                    priceId={product.priceId}
+                    mode={product.mode}
+                    className="bg-orange-600 text-white hover:bg-orange-500"
+                  >
+                    {product.mode === 'subscription' ? 'Subscribe' : 'Purchase'}
+                  </CheckoutButton>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </section>
