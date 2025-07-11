@@ -101,7 +101,15 @@ export function Header() {
             <div className="hidden md:block">
               <NavLink href="/contact">Contact</NavLink>
             </div>
-            <Button href="/consultation" color="orange">
+            <div className="hidden md:flex md:items-center md:gap-x-4">
+              <NavLink href="/login">Sign in</NavLink>
+              <Button href="/register" color="orange">
+                <span>
+                  Get Started
+                </span>
+              </Button>
+            </div>
+            <Button href="/consultation" color="orange" className="hidden lg:block">
               <span>
                 AI Consultation <span className="hidden lg:inline">Call</span>
               </span>

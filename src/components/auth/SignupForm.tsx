@@ -38,7 +38,7 @@ export function SignupForm() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${window.location.origin}/user/dashboard`,
         },
       })
 
@@ -46,8 +46,8 @@ export function SignupForm() {
         setError(error.message)
       } else {
         setSuccess(true)
-        // Redirect to dashboard after successful signup
-        router.push('/dashboard')
+        // Redirect to user dashboard after successful signup
+        router.push('/user/dashboard')
       }
     } catch (err) {
       setError('An unexpected error occurred')
