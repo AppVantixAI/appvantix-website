@@ -103,11 +103,11 @@ export default function ToolsPage() {
               </div>
               
               <div className="mt-3 flex gap-2">
-                <Button size="sm" variant="outline" className="flex-1">
+                <Button variant="outline" className="flex-1">
                   {tool.status === 'active' ? 'Configure' : 'Activate'}
                 </Button>
                 {tool.status === 'active' && (
-                  <Button size="sm" variant="outline">
+                  <Button variant="outline">
                     Run Now
                   </Button>
                 )}

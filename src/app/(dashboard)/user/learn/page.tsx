@@ -119,7 +119,7 @@ export default function LearnPage() {
                 <div className="text-right">
                   <p className="text-sm font-medium text-gray-900">{module.progress}%</p>
                   {activeModule === module.id && !module.completed && (
-                    <Button size="sm" color="orange" className="mt-2">
+                    <Button color="orange" className="mt-2">
                       {module.progress > 0 ? 'Continue' : 'Start'}
                     </Button>
                   )}
@@ -158,7 +158,7 @@ export default function LearnPage() {
                     <p className="text-sm text-gray-600">{resource.type} • {resource.size}</p>
                   </div>
                 </div>
-                <Button size="sm" variant="outline">
+                <Button variant="outline">
                   Download
                 </Button>
               </div>

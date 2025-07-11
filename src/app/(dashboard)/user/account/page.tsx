@@ -95,7 +95,7 @@ export default function AccountPage() {
       <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Billing History</h2>
-          <Button variant="outline" size="sm">
+          <Button variant="outline">
             Download All Invoices
           </Button>
         </div>
@@ -123,7 +123,7 @@ export default function AccountPage() {
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <Button size="sm" variant="outline">
+                    <Button variant="outline">
                       Download
                     </Button>
                   </td>
@@ -140,7 +140,7 @@ export default function AccountPage() {
         
         <div className="space-y-4">
           <p className="text-gray-600">
-            Need help or have feedback? We're here to support you.
+            Need help or have feedback? We&apos;re here to support you.
           </p>
           
           <div className="flex gap-3">

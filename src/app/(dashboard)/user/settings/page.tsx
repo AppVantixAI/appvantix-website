@@ -116,9 +116,9 @@ export default function SettingsPage() {
                 </div>
               </div>
               <Button
-                size="sm"
-                variant={value.connected ? 'outline' : 'solid'}
-                color={value.connected ? 'gray' : 'orange'}
+               
+                variant={'solid'}
+                color={value.connected ? 'slate' : 'orange'}
               >
                 {value.connected ? 'Disconnect' : 'Connect'}
               </Button>
@@ -141,10 +141,10 @@ export default function SettingsPage() {
               <code className="flex-1 bg-white px-3 py-1 rounded border border-gray-300 text-sm font-mono">
                 ak_live_••••••••••••••••
               </code>
-              <Button size="sm" variant="outline">
+              <Button variant="outline">
                 Rotate
               </Button>
-              <Button size="sm" variant="outline">
+              <Button variant="outline">
                 Revoke
               </Button>
             </div>

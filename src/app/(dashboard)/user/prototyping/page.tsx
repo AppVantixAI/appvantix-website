@@ -105,10 +105,10 @@ export default function SafePrototypingPage() {
               </div>
               
               <div className="mt-4 flex gap-2">
-                <Button size="sm" variant="outline">
+                <Button variant="outline">
                   View Demo
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button variant="outline">
                   Comments
                 </Button>
               </div>

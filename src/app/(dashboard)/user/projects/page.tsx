@@ -98,14 +98,14 @@ export default function ProjectsPage() {
 
             {/* Actions */}
             <div className="flex gap-3">
-              <Button size="sm" variant="outline">
+              <Button variant="outline">
                 View Details
               </Button>
-              <Button size="sm" variant="outline">
+              <Button variant="outline">
                 Download Assets
               </Button>
               {project.status === 'Active' && (
-                <Button size="sm" variant="outline">
+                <Button variant="outline">
                   Give Feedback
                 </Button>
               )}
@@ -118,8 +118,8 @@ export default function ProjectsPage() {
       <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
         <h3 className="font-semibold text-orange-900 mb-2">Recent Updates</h3>
         <ul className="space-y-2 text-sm text-orange-700">
-          <li>• Build completed for "E-commerce Platform Redesign"</li>
-          <li>• Feedback requested on "Customer Dashboard" wireframes</li>
+          <li>• Build completed for &quot;E-commerce Platform Redesign&quot;</li>
+          <li>• Feedback requested on &quot;Customer Dashboard&quot; wireframes</li>
         </ul>
       </div>
     </div>
