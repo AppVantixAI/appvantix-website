@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
-import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/Button'
 
 interface CheckoutButtonProps {
@@ -34,24 +33,15 @@ export function CheckoutButton({
     setError(null)
 
     try {
-      const { data: { session } } = await supabase.auth.getSession()
-      
-      if (!session) {
-        window.location.href = '/login'
-        return
-      }
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/stripe-checkout`, {
+      const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
+          'Authorization': `Bearer ${user.id}`, // You might need to adjust this based on your auth
         },
         body: JSON.stringify({
-          price_id: priceId,
+          priceId,
           mode,
-          success_url: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${window.location.origin}/pricing`,
         }),
       })
 

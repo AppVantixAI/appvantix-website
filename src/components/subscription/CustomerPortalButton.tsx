@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
-import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/Button'
 
 interface CustomerPortalButtonProps {
@@ -25,21 +24,14 @@ export function CustomerPortalButton({ children, className }: CustomerPortalButt
     setError(null)
 
     try {
-      const { data: { session } } = await supabase.auth.getSession()
-      
-      if (!session) {
-        window.location.href = '/login'
-        return
-      }
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/stripe-portal`, {
+      const response = await fetch('/api/customer-portal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
+          'Authorization': `Bearer ${user.id}`,
         },
         body: JSON.stringify({
-          return_url: `${window.location.origin}/user/account`,
+          returnUrl: `${window.location.origin}/user/account`,
         }),
       })
 

@@ -2,6 +2,35 @@
 
 Salient is a [Tailwind Plus](https://tailwindcss.com/plus) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
 
+## Stripe Integration
+
+This app includes a complete Stripe integration for payments and subscriptions:
+
+### Setup
+
+1. **Environment Variables**: Copy `.env.local` and add your Stripe keys:
+   ```bash
+   STRIPE_SECRET_KEY=sk_test_...
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
+   ```
+
+2. **Webhook Endpoint**: Set up a webhook in your Stripe Dashboard pointing to:
+   ```
+   https://your-domain.com/api/webhooks/stripe
+   ```
+
+3. **Products**: Update the product configurations in `src/stripe-config.ts` with your actual Stripe product and price IDs.
+
+### Features
+
+- ✅ Checkout sessions for one-time payments and subscriptions
+- ✅ Customer portal for self-service billing management
+- ✅ Webhook handling for real-time updates
+- ✅ Database integration with Supabase
+- ✅ Admin dashboard with revenue analytics
+- ✅ Subscription management and status tracking
+
 ## Getting started
 
 To get started with this template, first install the npm dependencies:
