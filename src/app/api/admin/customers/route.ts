@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getTopCustomers } from '@/lib/stripe/utils'
 
+// Force dynamic rendering for this API route
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     // TODO: Add authentication middleware to verify admin user
