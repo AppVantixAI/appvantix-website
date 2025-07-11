@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/Button'
+import { CustomerPortalButton } from '@/components/subscription/CustomerPortalButton'
 
 const billingHistory = [
   { date: '2024-01-01', amount: '$299', description: 'Monthly Subscription', status: 'Paid' },
@@ -64,9 +65,11 @@ export default function AccountPage() {
             <Button variant="outline">
               Upgrade Plan
             </Button>
-            <Button variant="outline">
-              Cancel Subscription
-            </Button>
+            <CustomerPortalButton>
+              <Button variant="outline">
+                Manage Subscription
+              </Button>
+            </CustomerPortalButton>
           </div>
         </div>
       </div>
@@ -95,9 +98,11 @@ export default function AccountPage() {
       <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Billing History</h2>
-          <Button variant="outline">
-            Download All Invoices
-          </Button>
+          <CustomerPortalButton>
+            <Button variant="outline">
+              View All Invoices
+            </Button>
+          </CustomerPortalButton>
         </div>
         
         <div className="overflow-x-auto">

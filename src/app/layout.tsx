@@ -2,6 +2,7 @@ import { type Metadata } from 'next'
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
 import { AuthProvider } from '@/components/auth/AuthProvider'
+import { StripeProvider } from '@/components/checkout/StripeProvider'
 
 import '@/styles/tailwind.css'
 
@@ -42,7 +43,9 @@ export default function RootLayout({
     >
       <body className="flex h-full flex-col">
         <AuthProvider>
-          {children}
+          <StripeProvider>
+            {children}
+          </StripeProvider>
         </AuthProvider>
       </body>
     </html>
