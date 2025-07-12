@@ -19,11 +19,23 @@ const AuthContext = createContext<AuthContextType>({
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    // Check if Supabase is configured
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.warn('Supabase environment variables not configured')
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
+      setLoading(false)
+    }).catch((err) => {
+      console.error('Auth session error:', err)
+      setError('Authentication service unavailable')
       setLoading(false)
     })
 
