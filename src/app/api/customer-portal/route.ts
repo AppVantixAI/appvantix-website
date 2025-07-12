@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getStripeInstance } from '@/lib/stripe/config'
-import { getSupabaseClient, isSupabaseConfigured } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,19 +22,38 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Return URL is required' }, { status: 400 })
     }
 
-    // Get the current user (implement proper auth)
+    // Get the current user from Supabase auth
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
     }
 
-    // For now, we'll use a placeholder customer ID
-    // In a real app, you'd get this from your database based on the authenticated user
-    const customerId = 'cus_placeholder' // Replace with actual customer lookup
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
+    const token = authHeader.replace('Bearer ', '')
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token)
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid authentication' }, { status: 401 })
+    }
+
+    // Get customer ID from database
+    const { data: customer, error: customerError } = await supabase
+      .from('stripe_customers')
+      .select('customer_id')
+      .eq('user_id', user.id)
+      .single()
+
+    if (customerError || !customer) {
+      return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
+    }
 
     // Create billing portal session
     const session = await stripe.billingPortal.sessions.create({
-      customer: customerId,
+      customer: customer.customer_id,
       return_url: returnUrl,
     })
 

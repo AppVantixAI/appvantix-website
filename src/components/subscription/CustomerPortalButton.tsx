@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
+import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/Button'
 
 interface CustomerPortalButtonProps {
@@ -24,11 +25,17 @@ export function CustomerPortalButton({ children, className }: CustomerPortalButt
     setError(null)
 
     try {
+      // Get the user's session token
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        throw new Error('No active session')
+      }
+
       const response = await fetch('/api/customer-portal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.id}`,
+          'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
           returnUrl: `${window.location.origin}/user/account`,
