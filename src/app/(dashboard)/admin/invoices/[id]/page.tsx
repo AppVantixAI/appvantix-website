@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 import {
   Dialog,
   DialogPanel,
@@ -150,6 +151,13 @@ export default function InvoiceDetail() {
                 <img
                   alt={invoice.customer.name}
                   src={invoice.customer.logoUrl}
+                  className="size-16 flex-none rounded-full ring-1 ring-gray-900/10"
+                />
+                <Image
+                  alt={invoice.customer.name}
+                  src={invoice.customer.logoUrl}
+                  width={64}
+                  height={64}
                   className="size-16 flex-none rounded-full ring-1 ring-gray-900/10"
                 />
                 <h1>
@@ -397,6 +405,13 @@ export default function InvoiceDetail() {
                           src={activityItem.person.imageUrl}
                           className="relative mt-3 size-6 flex-none rounded-full bg-gray-50"
                         />
+                        <Image
+                          alt=""
+                          src={activityItem.person.imageUrl}
+                          width={24}
+                          height={24}
+                          className="relative mt-3 size-6 flex-none rounded-full bg-gray-50"
+                        />
                         <div className="flex-auto rounded-md p-3 ring-1 ring-gray-200 ring-inset bg-white">
                           <div className="flex justify-between gap-x-4">
                             <div className="py-0.5 text-xs/5 text-gray-500">
@@ -436,6 +451,13 @@ export default function InvoiceDetail() {
                 <img
                   alt=""
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  className="size-6 flex-none rounded-full bg-gray-50"
+                />
+                <Image
+                  alt=""
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  width={24}
+                  height={24}
                   className="size-6 flex-none rounded-full bg-gray-50"
                 />
                 <form action="#" className="relative flex-auto">

@@ -97,7 +97,7 @@ export default function StripeSetupPage() {
                   • Go to Developers → Webhooks in your Stripe dashboard
                 </p>
                 <p className="text-sm">
-                  • Click "Add endpoint"
+                  • Click &quot;Add endpoint&quot;
                 </p>
                 <p className="text-sm">
                   • Endpoint URL: <code className="bg-gray-100 px-2 py-1 rounded">https://your-domain.com/api/webhooks/stripe</code>
