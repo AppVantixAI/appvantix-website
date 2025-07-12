@@ -37,8 +37,14 @@ export interface TransactionData {
 
 export async function getDashboardStats(): Promise<DashboardStats> {
   try {
-    // Get Stripe instance
-    const stripe = getStripeInstance()
+    // Get Stripe instance with error handling
+    let stripe
+    try {
+      stripe = getStripeInstance()
+    } catch (configError: any) {
+      console.error('Stripe configuration error:', configError.message)
+      throw new Error('Stripe is not properly configured. Please check your API keys.')
+    }
     
     // Get current period (last 30 days)
     const now = new Date()
@@ -136,7 +142,13 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
 export async function getTopCustomers(limit: number = 10): Promise<CustomerData[]> {
   try {
-    const stripe = getStripeInstance()
+    let stripe
+    try {
+      stripe = getStripeInstance()
+    } catch (configError: any) {
+      console.error('Stripe configuration error:', configError.message)
+      throw new Error('Stripe is not properly configured. Please check your API keys.')
+    }
     
     const customers = await stripe.customers.list({
       limit,
@@ -194,7 +206,13 @@ export async function getTopCustomers(limit: number = 10): Promise<CustomerData[
 
 export async function getRecentTransactions(limit: number = 20): Promise<TransactionData[]> {
   try {
-    const stripe = getStripeInstance()
+    let stripe
+    try {
+      stripe = getStripeInstance()
+    } catch (configError: any) {
+      console.error('Stripe configuration error:', configError.message)
+      throw new Error('Stripe is not properly configured. Please check your API keys.')
+    }
     
     const charges = await stripe.charges.list({
       limit,

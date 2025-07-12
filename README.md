@@ -18,6 +18,19 @@ Before running this application, you must configure your environment variables:
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your public anon key
    - `SUPABASE_SERVICE_ROLE_KEY`: Your service role key
 
+### Required: Stripe Configuration
+
+1. **Create a Stripe account** at [https://stripe.com](https://stripe.com)
+2. **Get your API keys** from Developers → API keys in your Stripe Dashboard
+3. **Update `.env.local`** with your Stripe credentials:
+   ```bash
+   STRIPE_SECRET_KEY=sk_test_your_actual_secret_key_here
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_actual_publishable_key_here
+   STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
+   ```
+
+**⚠️ Important**: Replace the placeholder keys with your actual Stripe API keys!
+
 **⚠️ Important**: The app will not work without proper Supabase configuration!
 
 ## Stripe Integration

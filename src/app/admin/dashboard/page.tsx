@@ -52,6 +52,8 @@ export default function AdminDashboard() {
         if (statsResponse.ok) {
           const statsData = await statsResponse.json()
           setStats(statsData.data)
+        } else {
+          console.error('Failed to fetch stats:', await statsResponse.text())
         }
 
         // Fetch top customers
@@ -59,6 +61,8 @@ export default function AdminDashboard() {
         if (customersResponse.ok) {
           const customersData = await customersResponse.json()
           setCustomers(customersData.data)
+        } else {
+          console.error('Failed to fetch customers:', await customersResponse.text())
         }
 
         // Fetch recent transactions
@@ -66,6 +70,8 @@ export default function AdminDashboard() {
         if (transactionsResponse.ok) {
           const transactionsData = await transactionsResponse.json()
           setTransactions(transactionsData.data)
+        } else {
+          console.error('Failed to fetch transactions:', await transactionsResponse.text())
         }
       } catch (err) {
         console.error('Error fetching dashboard data:', err)
