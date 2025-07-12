@@ -2,16 +2,12 @@
 
 import { Fragment, useState } from 'react'
 import Image from 'next/image'
-import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   ArrowDownCircleIcon,
   ArrowPathIcon,
   ArrowUpCircleIcon,
-  Bars3Icon,
-  EllipsisHorizontalIcon,
   PlusSmallIcon,
 } from '@heroicons/react/20/solid'
-import { BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 // This will be replaced with actual Stripe data
 const stats = [
@@ -115,19 +111,22 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       <main>
-        <div className="relative isolate overflow-hidden">
+        <div className="relative isolate overflow-hidden bg-white">
           {/* Header */}
-          <header className="pt-6 pb-4 sm:pb-6">
+          <header className="pt-8 pb-6 sm:pb-8 border-b border-gray-200">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
-              <h1 className="text-base/7 font-semibold text-gray-900">Revenue & Payments</h1>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+                <p className="mt-2 text-gray-600">Monitor revenue, payments, and customer activity</p>
+              </div>
               <div className="order-last flex w-full gap-x-8 text-sm/6 font-semibold sm:order-0 sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:text-sm/7">
-                <a href="#" className="text-indigo-600">Last 7 days</a>
+                <a href="#" className="text-orange-600">Last 7 days</a>
                 <a href="#" className="text-gray-700">Last 30 days</a>
                 <a href="#" className="text-gray-700">All-time</a>
               </div>
               <a
                 href="#"
-                className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500"
+                className="ml-auto flex items-center gap-x-1 rounded-lg bg-orange-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 transition-colors"
               >
                 <PlusSmallIcon aria-hidden="true" className="-ml-1.5 size-5" />
                 Create Invoice
@@ -136,46 +135,45 @@ export default function AdminDashboard() {
           </header>
 
           {/* Stats */}
-          <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
-            <dl className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
+          <div className="bg-gray-50 py-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat, statIdx) => (
                 <div
                   key={stat.name}
-                  className={classNames(
-                    statIdx % 2 === 1 ? 'sm:border-l' : statIdx === 2 ? 'lg:border-l' : '',
-                    'flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8',
-                  )}
+                  className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
                 >
-                  <dt className="text-sm/6 font-medium text-gray-500">{stat.name}</dt>
-                  <dd
-                    className={classNames(
-                      stat.changeType === 'negative' ? 'text-rose-600' : 'text-green-600',
-                      'text-xs font-medium',
-                    )}
-                  >
-                    {stat.change}
-                  </dd>
-                  <dd className="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900">
-                    {stat.value}
-                  </dd>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <dt className="text-sm font-medium text-gray-600">{stat.name}</dt>
+                      <dd className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</dd>
+                    </div>
+                    <dd
+                      className={classNames(
+                        stat.changeType === 'negative' ? 'text-red-600 bg-red-50' : 'text-green-600 bg-green-50',
+                        'text-sm font-medium px-2 py-1 rounded-full',
+                      )}
+                    >
+                      {stat.change}
+                    </dd>
+                  </div>
                 </div>
               ))}
-            </dl>
+              </dl>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-16 py-16 xl:space-y-20">
+        <div className="space-y-8 py-8">
           {/* Recent Transactions */}
           <div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h2 className="mx-auto max-w-2xl text-base font-semibold text-gray-900 lg:mx-0 lg:max-w-none">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">
                 Recent Transactions
               </h2>
-            </div>
-            <div className="mt-6 overflow-hidden border-t border-gray-100">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-                  <table className="w-full text-left">
+              
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table className="w-full text-left">
                     <thead className="sr-only">
                       <tr>
                         <th>Amount</th>
@@ -187,15 +185,13 @@ export default function AdminDashboard() {
                       {recentTransactions.map((day) => (
                         <Fragment key={day.dateTime}>
                           <tr className="text-sm/6 text-gray-900">
-                            <th scope="colgroup" colSpan={3} className="relative isolate py-2 font-semibold">
+                            <th scope="colgroup" colSpan={3} className="relative isolate py-3 px-6 font-semibold bg-gray-50">
                               <time dateTime={day.dateTime}>{day.date}</time>
-                              <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
-                              <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                             </th>
                           </tr>
                           {day.transactions.map((transaction) => (
                             <tr key={transaction.id}>
-                              <td className="relative py-5 pr-6">
+                              <td className="relative py-4 px-6">
                                 <div className="flex gap-x-6">
                                   <transaction.icon
                                     aria-hidden="true"
@@ -207,7 +203,7 @@ export default function AdminDashboard() {
                                       <div
                                         className={classNames(
                                           statuses[transaction.status as keyof typeof statuses] || 'text-gray-600 bg-gray-50 ring-gray-500/10',
-                                          'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',
+                                          'rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
                                         )}
                                       >
                                         {transaction.status}
@@ -218,18 +214,16 @@ export default function AdminDashboard() {
                                     ) : null}
                                   </div>
                                 </div>
-                                <div className="absolute right-full bottom-0 h-px w-screen bg-gray-100" />
-                                <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
                               </td>
-                              <td className="hidden py-5 pr-6 sm:table-cell">
+                              <td className="hidden py-4 px-6 sm:table-cell">
                                 <div className="text-sm/6 text-gray-900">{transaction.client}</div>
                                 <div className="mt-1 text-xs/5 text-gray-500">{transaction.description}</div>
                               </td>
-                              <td className="py-5 text-right">
+                              <td className="py-4 px-6 text-right">
                                 <div className="flex justify-end">
                                   <a
                                     href={transaction.href}
-                                    className="text-sm/6 font-medium text-indigo-600 hover:text-indigo-500"
+                                    className="text-sm/6 font-medium text-orange-600 hover:text-orange-500"
                                   >
                                     View<span className="hidden sm:inline"> transaction</span>
                                   </a>
@@ -244,24 +238,22 @@ export default function AdminDashboard() {
                       ))}
                     </tbody>
                   </table>
-                </div>
               </div>
             </div>
           </div>
 
           {/* Top Customers */}
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
               <div className="flex items-center justify-between">
-                <h2 className="text-base/7 font-semibold text-gray-900">Top Customers</h2>
+                <h2 className="text-xl font-semibold text-gray-900">Top Customers</h2>
                 <a href="#" className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500">
                   View all<span className="sr-only">, customers</span>
                 </a>
               </div>
-              <ul role="list" className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+              <ul role="list" className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
                 {topCustomers.map((customer) => (
-                  <li key={customer.id} className="overflow-hidden rounded-xl border border-gray-200">
-                    <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
+                  <li key={customer.id} className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-x-4 border-b border-gray-200 bg-gray-50 p-6">
                       <Image
                         alt={customer.name}
                         src={customer.imageUrl}
@@ -272,7 +264,7 @@ export default function AdminDashboard() {
                       <div className="text-sm/6 font-medium text-gray-900">{customer.name}</div>
                       <div className={classNames(
                         customer.subscriptionStatus === 'Active' ? 'text-green-700 bg-green-50 ring-green-600/20' : 'text-red-700 bg-red-50 ring-red-600/10',
-                        'ml-auto rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset'
+                        'ml-auto rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset'
                       )}>
                         {customer.subscriptionStatus}
                       </div>
@@ -295,7 +287,7 @@ export default function AdminDashboard() {
                           <div
                             className={classNames(
                               statuses[customer.lastPayment.status as keyof typeof statuses] || 'text-gray-600 bg-gray-50 ring-gray-500/10',
-                              'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',
+                              'rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
                             )}
                           >
                             {customer.lastPayment.status}
@@ -306,7 +298,6 @@ export default function AdminDashboard() {
                   </li>
                 ))}
               </ul>
-            </div>
           </div>
         </div>
       </main>

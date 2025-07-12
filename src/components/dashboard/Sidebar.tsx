@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/Logo'
-import { useAuth } from '@/hooks/useAuth'
 import clsx from 'clsx'
 
 const navigation = [
@@ -75,9 +74,8 @@ const navigation = [
   },
 ]
 
-export function Sidebar() {
+export function Sidebar({ user }: { user?: { email: string; id: string } }) {
   const pathname = usePathname()
-  const { user, signOut } = useAuth()
 
   return (
     <div className="flex flex-col h-full bg-white border-r border-gray-200">
@@ -122,18 +120,18 @@ export function Sidebar() {
           <div className="flex-shrink-0">
             <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
               <span className="text-sm font-medium text-orange-700">
-                {user?.email?.charAt(0).toUpperCase()}
+                {user?.email?.charAt(0).toUpperCase() || 'D'}
               </span>
             </div>
           </div>
           <div className="ml-3 flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">
-              {user?.email}
+              {user?.email || 'demo@appvantix.com'}
             </p>
           </div>
         </div>
         <button
-          onClick={signOut}
+          onClick={() => console.log('Sign out clicked')}
           className="mt-3 w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-150"
         >
           Sign out

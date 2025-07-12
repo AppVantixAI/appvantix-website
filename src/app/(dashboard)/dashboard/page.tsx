@@ -1,8 +1,5 @@
 'use client'
 
-import { useAuth } from '@/hooks/useAuth'
-import { useSubscription } from '@/hooks/useSubscription'
-import { SubscriptionStatus } from '@/components/subscription/SubscriptionStatus'
 import Link from 'next/link'
 
 const quickActions = [
@@ -58,31 +55,19 @@ const recentActivity = [
   { action: 'Account created', time: '1 day ago' },
 ]
 
+const mockStats = [
+  { name: 'Total Revenue', value: '$12,450', change: '+4.75%', changeType: 'positive' },
+  { name: 'Active Projects', value: '8', change: '+12%', changeType: 'positive' },
+  { name: 'Completed Tasks', value: '247', change: '+18%', changeType: 'positive' },
+  { name: 'Time Saved', value: '42h', change: '+8%', changeType: 'positive' },
+]
 export default function Dashboard() {
-  const { user, loading: authLoading } = useAuth()
-  const { subscription, loading: subLoading } = useSubscription()
-
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-600"></div>
-      </div>
-    )
-  }
-
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-          <p className="text-gray-600">Please sign in to access your dashboard.</p>
-        </div>
-      </div>
-    )
-  }
+  // Mock user for development
+  const user = { email: 'demo@appvantix.com', id: 'demo-user' }
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">
@@ -93,6 +78,25 @@ export default function Dashboard() {
         </p>
       </div>
 
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {mockStats.map((stat) => (
+          <div key={stat.name} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">{stat.name}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+              </div>
+              <div className={`text-sm font-medium ${
+                stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+              }`}>
+                {stat.change}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Quick Actions */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
@@ -101,9 +105,9 @@ export default function Dashboard() {
             <Link
               key={action.title}
               href={action.href}
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+              className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 hover:scale-105 group"
             >
-              <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center text-white mb-4`}>
+              <div className={`w-12 h-12 ${action.color} rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform`}>
                 {action.icon}
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{action.title}</h3>
@@ -114,30 +118,37 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Subscription Status */}
+        {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Subscription Status</h2>
-            {subLoading ? (
-              <div className="animate-pulse">
-                <div className="h-4 bg-gray-200 rounded w-48"></div>
-              </div>
-            ) : (
-              <SubscriptionStatus />
-            )}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+            <div className="space-y-4">
+              {recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <span className="text-sm text-gray-900">{activity.action}</span>
+                  <span className="text-xs text-gray-500">{activity.time}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
-          <div className="space-y-3">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">{activity.action}</span>
-                <span className="text-xs text-gray-400">{activity.time}</span>
-              </div>
-            ))}
+        {/* Quick Stats */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h2>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Active Projects</span>
+              <span className="text-sm font-semibold text-gray-900">8</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Completed Tasks</span>
+              <span className="text-sm font-semibold text-gray-900">247</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Time Saved</span>
+              <span className="text-sm font-semibold text-gray-900">42 hours</span>
+            </div>
           </div>
         </div>
       </div>
@@ -146,23 +157,24 @@ export default function Dashboard() {
       <div className="mt-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Your AppVantix Journey</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <h3 className="font-semibold text-blue-700 mb-2">Clarity</h3>
             <p className="text-sm text-gray-600">Transform problems into clear solutions through guided consultations.</p>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <h3 className="font-semibold text-purple-700 mb-2">Safety</h3>
             <p className="text-sm text-gray-600">Reduce risks with secure prototyping before full development.</p>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <h3 className="font-semibold text-green-700 mb-2">Speed</h3>
             <p className="text-sm text-gray-600">Accelerate progress with automation tools and proven processes.</p>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <h3 className="font-semibold text-indigo-700 mb-2">Empowerment</h3>
             <p className="text-sm text-gray-600">Build capabilities through structured learning and hands-on experience.</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )
