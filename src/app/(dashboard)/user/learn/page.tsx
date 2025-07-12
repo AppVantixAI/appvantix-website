@@ -174,9 +174,9 @@ export default function LearnPage() {
           </p>
           <div className="space-y-3">
             <div className="p-3 bg-blue-50 border border-blue-200 rounded">
-              <p className="font-medium text-blue-900">Next Session</p>
-              <p className="text-sm text-blue-700">Thursday, 2:00 PM EST</p>
-              <p className="text-sm text-blue-600 mt-1">Topic: Advanced Prototyping</p>
+              <p className="font-medium text-orange-900">Next Session</p>
+              <p className="text-sm text-orange-700">Thursday, 2:00 PM EST</p>
+              <p className="text-sm text-orange-600 mt-1">Topic: Advanced Prototyping</p>
             </div>
             <Button color="orange" className="w-full">
               Reserve Your Spot

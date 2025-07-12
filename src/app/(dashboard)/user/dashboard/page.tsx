@@ -136,9 +136,9 @@ export default function UserDashboardPage() {
                 Schedule Now
               </Button>
             </div>
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="font-medium text-blue-900">Complete Module 3</p>
-              <p className="text-sm text-blue-700 mt-1">You&apos;re 40% through Rapid Prototyping</p>
+            <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+              <p className="font-medium text-orange-900">Complete Module 3</p>
+              <p className="text-sm text-orange-700 mt-1">You&apos;re 40% through Rapid Prototyping</p>
               <Button variant="outline" className="mt-2">
                 Continue Learning
               </Button>

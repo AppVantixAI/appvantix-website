@@ -113,7 +113,7 @@ export function SignupForm() {
         <Button 
           type="submit" 
           variant="solid" 
-          color="blue" 
+          color="orange" 
           className="w-full"
           disabled={loading}
         >
@@ -128,7 +128,7 @@ export function SignupForm() {
           Already have an account?{' '}
           <Link
             href="/login"
-            className="font-medium text-blue-600 hover:underline"
+            className="font-medium text-orange-600 hover:underline"
           >
             Sign in
           </Link>

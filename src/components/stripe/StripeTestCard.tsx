@@ -60,11 +60,11 @@ export function StripeTestCard() {
       </div>
 
       {/* Test Card Info */}
-      <div className="mt-4 p-3 bg-blue-50 rounded text-xs">
-        <p className="font-medium text-blue-800">Test Card Numbers:</p>
-        <p className="text-blue-700">Success: 4242 4242 4242 4242</p>
-        <p className="text-blue-700">Decline: 4000 0000 0000 0002</p>
-        <p className="text-blue-700">Any future date, any CVC</p>
+      <div className="mt-4 p-3 bg-orange-50 rounded text-xs">
+        <p className="font-medium text-orange-800">Test Card Numbers:</p>
+        <p className="text-orange-700">Success: 4242 4242 4242 4242</p>
+        <p className="text-orange-700">Decline: 4000 0000 0000 0002</p>
+        <p className="text-orange-700">Any future date, any CVC</p>
       </div>
     </div>
   )

@@ -183,14 +183,14 @@ export default function LearnPage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Office Hours */}
-          <div className="bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-3">Next Office Hours</h3>
-            <div className="space-y-2 text-sm text-blue-800">
+          <div className="bg-orange-50 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-orange-900 mb-3">Next Office Hours</h3>
+            <div className="space-y-2 text-sm text-orange-800">
               <p><strong>Date:</strong> {nextOfficeHours.date}</p>
               <p><strong>Time:</strong> {nextOfficeHours.time}</p>
               <p><strong>Topic:</strong> {nextOfficeHours.topic}</p>
             </div>
-            <button className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+            <button className="mt-4 w-full bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700 transition-colors">
               Join Office Hours
             </button>
           </div>

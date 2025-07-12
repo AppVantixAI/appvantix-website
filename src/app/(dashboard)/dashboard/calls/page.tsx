@@ -144,23 +144,23 @@ export default function ClarityCallsPage() {
           </div>
 
           {/* What to Expect */}
-          <div className="bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-3">What to Expect</h3>
-            <ul className="space-y-2 text-sm text-blue-800">
+          <div className="bg-orange-50 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-orange-900 mb-3">What to Expect</h3>
+            <ul className="space-y-2 text-sm text-orange-800">
               <li className="flex items-start">
-                <span className="text-blue-600 mr-2">•</span>
+                <span className="text-orange-600 mr-2">•</span>
                 Problem translation and clarification
               </li>
               <li className="flex items-start">
-                <span className="text-blue-600 mr-2">•</span>
+                <span className="text-orange-600 mr-2">•</span>
                 Solution pathway identification
               </li>
               <li className="flex items-start">
-                <span className="text-blue-600 mr-2">•</span>
+                <span className="text-orange-600 mr-2">•</span>
                 Next steps and action plan
               </li>
               <li className="flex items-start">
-                <span className="text-blue-600 mr-2">•</span>
+                <span className="text-orange-600 mr-2">•</span>
                 Automated follow-up with prep questions
               </li>
             </ul>
