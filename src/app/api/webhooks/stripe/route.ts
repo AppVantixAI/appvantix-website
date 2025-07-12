@@ -1,10 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
-import { stripe, webhookSecret } from '@/lib/stripe/config'
+import { getStripeInstance, getWebhookSecret } from '@/lib/stripe/config'
 import Stripe from 'stripe'
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe server-side configuration is available
+    let stripe: Stripe
+    let webhookSecret: string
+    
+    try {
+      stripe = getStripeInstance()
+      webhookSecret = getWebhookSecret()
+    } catch (configError: any) {
+      console.error('Stripe configuration error:', configError.message)
+      return NextResponse.json(
+        { error: 'Stripe server configuration not available' }, 
+        { status: 503 }
+      )
+    }
+
     const body = await request.text()
     const signature = headers().get('stripe-signature')
 

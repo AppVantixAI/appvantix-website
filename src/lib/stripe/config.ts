@@ -1,29 +1,38 @@
 import Stripe from 'stripe'
 
-// Stripe configuration
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+// Public key for client-side Stripe (required)
+export const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+
+// Validate required client-side environment variables
+if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+  throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is required')
+}
+
+// Server-side configuration (optional for build time)
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+export const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+
+// Create Stripe instance only if secret key is available
+export const stripe = stripeSecretKey ? new Stripe(stripeSecretKey, {
   apiVersion: '2024-12-18.acacia',
   appInfo: {
     name: 'AppVantix',
     version: '1.0.0',
   },
-})
+}) : null
 
-// Webhook secret for verifying Stripe webhooks
-export const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
-
-// Public key for client-side Stripe
-export const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-
-// Validate required environment variables
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is required')
+// Helper function to get Stripe instance with error handling
+export function getStripeInstance(): Stripe {
+  if (!stripe) {
+    throw new Error('Stripe server-side configuration is not available. Please set STRIPE_SECRET_KEY environment variable.')
+  }
+  return stripe
 }
 
-if (!process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error('STRIPE_WEBHOOK_SECRET is required')
-}
-
-if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
-  throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is required')
+// Helper function to get webhook secret with error handling
+export function getWebhookSecret(): string {
+  if (!webhookSecret) {
+    throw new Error('Stripe webhook secret is not available. Please set STRIPE_WEBHOOK_SECRET environment variable.')
+  }
+  return webhookSecret
 }

@@ -1,10 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe/config'
+import { getStripeInstance } from '@/lib/stripe/config'
 import { supabase } from '@/lib/supabase'
 import { getProductByPriceId } from '@/stripe-config'
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe server-side configuration is available
+    let stripe
+    try {
+      stripe = getStripeInstance()
+    } catch (configError: any) {
+      console.error('Stripe configuration error:', configError.message)
+      return NextResponse.json(
+        { error: 'Stripe server configuration not available' }, 
+        { status: 503 }
+      )
+    }
+
     const { priceId, mode = 'subscription' } = await request.json()
 
     if (!priceId) {
