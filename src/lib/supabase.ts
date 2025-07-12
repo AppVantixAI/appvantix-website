@@ -27,6 +27,31 @@ export function getSupabaseClient() {
   return supabase
 }
 
+// Helper function to create server-side client
+export function createServerClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
+
+// Helper function for real-time subscriptions
+export function subscribeToUserData(userId: string, callback: (payload: any) => void) {
+  return supabase
+    .channel('user-data')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'stripe_customers',
+        filter: `user_id=eq.${userId}`,
+      },
+      callback
+    )
+    .subscribe()
+}
+
 // Updated TypeScript types generated from appvantix-main Supabase database
 export type Json =
   | string

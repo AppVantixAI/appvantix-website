@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured, subscribeToUserData } from '@/lib/supabase'
 import { useAuth } from './useAuth'
 import { getProductByPriceId } from '@/stripe-config'
 
@@ -31,6 +31,11 @@ export function useSubscription() {
       return
     }
 
+    if (!isSupabaseConfigured()) {
+      setError('Supabase is not configured')
+      setLoading(false)
+      return
+    }
     const fetchSubscription = async () => {
       try {
         setLoading(true)
@@ -65,16 +70,25 @@ export function useSubscription() {
     }
 
     fetchSubscription()
+
+    // Set up real-time subscription to subscription changes
+    const channel = subscribeToUserData(user.id, (payload) => {
+      console.log('Subscription data changed:', payload)
+      fetchSubscription() // Refetch data when changes occur
+    })
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
   }, [user])
 
   return {
     subscription,
     loading,
     error,
-    refetch: () => {
-      if (user) {
-        setLoading(true)
-        // Re-trigger the effect by updating a dependency
+    refetch: async () => {
+      if (user && isSupabaseConfigured()) {
+        await fetchSubscription()
       }
     }
   }

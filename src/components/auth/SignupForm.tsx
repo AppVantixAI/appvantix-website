@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/Button'
 import { TextField } from '@/components/Fields'
 
@@ -11,48 +11,31 @@ export function SignupForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const router = useRouter()
+  const { signUp, loading } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
     if (password !== confirmPassword) {
       setError('Passwords do not match')
-      setLoading(false)
       return
     }
 
     if (password.length < 6) {
       setError('Password must be at least 6 characters long')
-      setLoading(false)
       return
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/user/dashboard`,
-        },
-      })
-
-      if (error) {
-        setError(error.message)
-      } else {
-        setSuccess(true)
-        // Redirect to user dashboard after successful signup
-        router.push('/user/dashboard')
-      }
+      await signUp(email, password)
+      setSuccess(true)
+      router.push('/user/dashboard')
     } catch (err) {
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
+      setError('Signup failed')
     }
   }
 
