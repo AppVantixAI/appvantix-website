@@ -121,7 +121,7 @@ export default function StripeSetupPage() {
                 disabled={loading}
                 color="orange"
               >
-                {loading ? &#39;Testing...&#39; : &#39;Test Stripe Connection&#39;}
+                {loading ? 'Testing...' : 'Test Stripe Connection'}
               </Button>
               
               {testResult && (
@@ -130,7 +130,7 @@ export default function StripeSetupPage() {
                     ? 'bg-green-50 text-green-800 border border-green-200' 
                     : 'bg-red-50 text-red-800 border border-red-200'
                 }`}>
-                  {testResult.success ? &#39;✅ Connection successful!&#39; : `❌ ${testResult.error || &#39;Connection failed&#39;}`}
+                  {testResult.success ? '✅ Connection successful!' : `❌ ${testResult.error || 'Connection failed'}`}
                 </div>
               )}
             </div>
@@ -168,7 +168,7 @@ export default function StripeSetupPage() {
 
           {/* Next Steps */}
           <div className="bg-orange-50 rounded-lg p-6 border border-orange-200">
-            <h2 className="text-xl font-semibold text-orange-900 mb-4">🎉 You&#39;re Almost Ready!</h2>
+            <h2 className="text-xl font-semibold text-orange-900 mb-4">🎉 You&apos;re Almost Ready!</h2>
             <p className="text-orange-800 mb-4">
               Your Stripe integration is fully implemented. Once you complete the setup above:
             </p>
