@@ -72,32 +72,32 @@ function Plan({
   return (
     <section
       className={clsx(
-        'flex flex-col rounded-3xl px-6 sm:px-8 bg-white shadow-lg',
-        featured ? 'order-first ring-2 ring-white py-8 lg:order-none' : 'py-8',
+        'flex flex-col rounded-3xl px-6 sm:px-8',
+        featured ? 'order-first bg-orange-600 py-8 lg:order-none' : 'lg:py-8',
       )}
     >
-      <h3 className="mt-5 font-display text-lg text-slate-900">{name}</h3>
+      <h3 className="mt-5 font-display text-lg text-white">{name}</h3>
       <p
         className={clsx(
           'mt-2 text-base',
-          'text-slate-600',
+          featured ? 'text-white' : 'text-slate-400',
         )}
       >
         {description}
       </p>
-      <p className="order-first font-display text-5xl font-light tracking-tight text-slate-900">
+      <p className="order-first font-display text-5xl font-light tracking-tight text-white">
         {price}
       </p>
       <ul
         role="list"
         className={clsx(
           'order-last mt-10 flex flex-col gap-y-3 text-sm',
-          'text-slate-700',
+          featured ? 'text-white' : 'text-slate-200',
         )}
       >
         {features.map((feature) => (
           <li key={feature} className="flex">
-            <CheckIcon className="text-green-500" />
+            <CheckIcon className={featured ? 'text-white' : 'text-slate-400'} />
             <span className="ml-4">{feature}</span>
           </li>
         ))}
@@ -107,7 +107,9 @@ function Plan({
         mode={mode}
         className={clsx(
           'mt-8',
-          'bg-orange-600 text-white hover:bg-orange-700'
+          featured 
+            ? 'bg-white text-orange-600 hover:bg-gray-50' 
+            : 'border border-white text-white hover:bg-white hover:text-slate-900'
         )}
       >
         Get started
@@ -137,7 +139,7 @@ export function Pricing() {
             </span>{' '}
             <span className="text-white">for every business.</span>
           </h2>
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-4 text-lg text-slate-600"></p>
           <p className="mt-4 text-lg text-orange-100">
             From individual productivity tools to enterprise AI solutions, we have the right package for your needs.
           </p>
