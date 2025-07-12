@@ -91,7 +91,7 @@ function MobileNavigation() {
             <MobileNavLink href="/user/dashboard">Dashboard</MobileNavLink>
             <button
               onClick={handleSignOut}
-              className="block w-full p-2 text-left text-red-600 hover:text-red-700"
+              className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 rounded-md hover:bg-red-50 hover:text-red-700 transition-colors"
             >
               Sign Out
             </button>
@@ -140,7 +140,7 @@ export function Header() {
                   </span>
                   <button
                     onClick={handleSignOut}
-                    className="text-sm text-red-600 hover:text-red-700 font-medium"
+                    className="block w-full p-2 text-left text-red-600 hover:text-red-700 rounded-md hover:bg-red-50 transition-colors"
                   >
                     Sign Out
                   </button>
@@ -156,7 +156,7 @@ export function Header() {
                 </Button>
               </div>
             )}
-            <Button href="/consultation" color="orange" className="hidden lg:block">
+            <Button href="/consultation" color="orange" className="hidden lg:inline-flex">
               <span>
                 AI Consultation <span className="hidden lg:inline">Call</span>
               </span>
