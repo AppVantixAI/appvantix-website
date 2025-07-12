@@ -2,6 +2,24 @@
 
 Salient is a [Tailwind Plus](https://tailwindcss.com/plus) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
 
+## Prerequisites
+
+Before running this application, you must configure your environment variables:
+
+### Required: Supabase Configuration
+
+1. **Create a Supabase project** at [https://supabase.com](https://supabase.com)
+2. **Copy `.env.example` to `.env.local`**:
+   ```bash
+   cp .env.example .env.local
+   ```
+3. **Update `.env.local`** with your Supabase credentials from your project's API settings:
+   - `NEXT_PUBLIC_SUPABASE_URL`: Your project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your public anon key
+   - `SUPABASE_SERVICE_ROLE_KEY`: Your service role key
+
+**⚠️ Important**: The app will not work without proper Supabase configuration!
+
 ## Stripe Integration
 
 This app includes a complete Stripe integration for payments and subscriptions:
