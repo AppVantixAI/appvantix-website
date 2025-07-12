@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   Popover,
   PopoverButton,
@@ -13,6 +14,7 @@ import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
+import { useAuth } from '@/hooks/useAuth'
 
 function MobileNavLink({
   href,
@@ -56,6 +58,14 @@ function MobileNavIcon({ open }: { open: boolean }) {
 }
 
 function MobileNavigation() {
+  const { user, signOut } = useAuth()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/')
+  }
+
   return (
     <Popover>
       <PopoverButton
@@ -76,13 +86,33 @@ function MobileNavigation() {
         <MobileNavLink href="#testimonials">Testimonials</MobileNavLink>
         <MobileNavLink href="#pricing">Pricing</MobileNavLink>
         <hr className="m-2 border-slate-300/40" />
-        <MobileNavLink href="/contact">Contact</MobileNavLink>
+        {user ? (
+          <>
+            <MobileNavLink href="/user/dashboard">Dashboard</MobileNavLink>
+            <button
+              onClick={handleSignOut}
+              className="block w-full p-2 text-left text-red-600 hover:text-red-700"
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <MobileNavLink href="/contact">Contact</MobileNavLink>
+        )}
       </PopoverPanel>
     </Popover>
   )
 }
 
 export function Header() {
+  const { user, signOut } = useAuth()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/')
+  }
+
   return (
     <header className="py-10">
       <Container>
@@ -99,16 +129,33 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href="/contact">Contact</NavLink>
+              {!user && <NavLink href="/contact">Contact</NavLink>}
             </div>
-            <div className="hidden md:flex md:items-center md:gap-x-4">
-              <NavLink href="/login">Sign in</NavLink>
-              <Button href="/register" color="orange">
-                <span>
-                  Get Started
-                </span>
-              </Button>
-            </div>
+            {user ? (
+              <div className="hidden md:flex md:items-center md:gap-x-4">
+                <NavLink href="/user/dashboard">Dashboard</NavLink>
+                <div className="flex items-center gap-x-3">
+                  <span className="text-sm text-gray-700">
+                    {user.email?.split('@')[0]}
+                  </span>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="hidden md:flex md:items-center md:gap-x-4">
+                <NavLink href="/login">Sign in</NavLink>
+                <Button href="/register" color="orange">
+                  <span>
+                    Get Started
+                  </span>
+                </Button>
+              </div>
+            )}
             <Button href="/consultation" color="orange" className="hidden lg:block">
               <span>
                 AI Consultation <span className="hidden lg:inline">Call</span>
