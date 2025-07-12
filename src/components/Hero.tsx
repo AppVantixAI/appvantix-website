@@ -11,7 +11,8 @@ import logoTuple from '@/images/logos/tuple.svg'
 
 export function Hero() {
   return (
-      <Container className="pt-20 pb-16 text-center lg:pt-32">
+    <section className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 pt-20 pb-16 lg:pt-32">
+      <Container className="relative text-center">
           <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
               Don&apos;t Reinvent the Wheel,{' '}
               <span className="relative whitespace-nowrap text-orange-600">
@@ -27,19 +28,20 @@ export function Hero() {
     </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
+          <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-white">
               AppVantix LLC is an AI App Agency that creates apps to save people time using AI. We enhance human experiences without replacing them—delivering innovative solutions through app stores, SaaS services, and AI consultation.
           </p>
 
           <div className="mt-10 flex justify-center gap-x-6">
-              <Button href="/apps">Browse Our Apps</Button>
+              <Button href="/apps" color="white">Browse Our Apps</Button>
               <Button
                   href="/consultation"
                   variant="outline"
+                  color="white"
               >
                   <svg
                       aria-hidden="true"
-                      className="h-3 w-3 flex-none fill-orange-600 group-active:fill-current"
+                      className="h-3 w-3 flex-none fill-white group-active:fill-current"
                   >
                       <path d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z" />
                   </svg>
@@ -48,7 +50,7 @@ export function Hero() {
           </div>
 
           <div className="mt-36 lg:mt-44">
-              <p className="font-display text-base text-slate-900">
+              <p className="font-display text-base text-white">
                   Trusted by innovative companies and forward-thinking teams
               </p>
               <ul
@@ -83,5 +85,6 @@ export function Hero() {
               </ul>
           </div>
       </Container>
+    </section>
   )
 }
