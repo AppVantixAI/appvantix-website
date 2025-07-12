@@ -8,7 +8,7 @@ export function CallToAction() {
   return (
     <section
       id="get-started-today"
-      className="relative overflow-hidden bg-blue-600 py-32"
+      className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 py-32"
     >
       <Image
         className="absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2"
@@ -25,7 +25,6 @@ export function CallToAction() {
           </h2>
           <p className="mt-4 text-lg tracking-tight text-white">
             Let&apos;s build the car together. Schedule a consultation to see how our AI solutions can save your team time while enhancing human capabilities.
-            feel like you’re doing something productive.
           </p>
           <Button href="/consultation" color="white" className="mt-10">
             Start Free Consultation
