@@ -128,22 +128,22 @@ export function Pricing() {
     <section
       id="pricing"
       aria-label="Pricing"
-      className="bg-slate-900 py-20 sm:py-32"
+      className="bg-white py-20 sm:py-32"
     >
       <Container>
         <div className="md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
             <span className="relative whitespace-nowrap">
-              <SwirlyDoodle className="absolute top-1/2 left-0 h-[1em] w-full fill-orange-400" />
-              <span className="relative">AI-powered solutions,</span>
+              <SwirlyDoodle className="absolute top-1/2 left-0 h-[1em] w-full fill-orange-300/70" />
+              <span className="relative text-slate-900">AI-powered solutions,</span>
             </span>{' '}
-            for every business.
+            <span className="text-slate-900">for every business.</span>
           </h2>
-          <p className="mt-4 text-lg text-slate-400">
+          <p className="mt-4 text-lg text-slate-600">
             From individual productivity tools to enterprise AI solutions, we have the right package for your needs.
           </p>
         </div>
-        <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
+        <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8 bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-8">
           {mainProducts.slice(0, 3).map((product, index) => (
             <Plan
               key={product.id}
@@ -160,22 +160,22 @@ export function Pricing() {
         
         {/* Additional products section */}
         <div className="mt-16">
-          <h3 className="text-center font-display text-2xl tracking-tight text-white mb-8">
+          <h3 className="text-center font-display text-2xl tracking-tight text-slate-900 mb-8">
             Additional Services
           </h3>
           <div className="grid max-w-4xl mx-auto grid-cols-1 gap-6 md:grid-cols-2">
             {products.filter(p => !p.name.includes('BoltBridge') && !p.name.includes('Website Management')).map((product) => (
-              <div key={product.id} className="bg-slate-800 rounded-2xl p-6">
-                <h4 className="font-display text-lg text-white mb-2">{product.name}</h4>
-                <p className="text-slate-300 text-sm mb-4">{product.description}</p>
+              <div key={product.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <h4 className="font-display text-lg text-slate-900 mb-2">{product.name}</h4>
+                <p className="text-slate-600 text-sm mb-4">{product.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="font-display text-2xl text-white">
+                  <span className="font-display text-2xl text-slate-900">
                     ${product.price}
                   </span>
                   <CheckoutButton
                     priceId={product.priceId}
                     mode={product.mode}
-                    className="bg-orange-600 text-white hover:bg-orange-500"
+                    className="bg-orange-600 text-white hover:bg-orange-700"
                   >
                     {product.mode === 'subscription' ? 'Subscribe' : 'Purchase'}
                   </CheckoutButton>
