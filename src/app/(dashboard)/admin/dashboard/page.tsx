@@ -1,6 +1,7 @@
 'use client'
 
 import { Fragment, useState } from 'react'
+import Image from 'next/image'
 import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   ArrowDownCircleIcon,
@@ -261,9 +262,11 @@ export default function AdminDashboard() {
                 {topCustomers.map((customer) => (
                   <li key={customer.id} className="overflow-hidden rounded-xl border border-gray-200">
                     <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                      <img
+                      <Image
                         alt={customer.name}
                         src={customer.imageUrl}
+                        width={48}
+                        height={48}
                         className="size-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
                       />
                       <div className="text-sm/6 font-medium text-gray-900">{customer.name}</div>
