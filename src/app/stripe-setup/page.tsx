@@ -130,7 +130,7 @@ export default function StripeSetupPage() {
                     ? 'bg-green-50 text-green-800 border border-green-200' 
                     : 'bg-red-50 text-red-800 border border-red-200'
                 }`}>
-                  {testResult.success ? '✅ Connection successful!' : `❌ ${testResult.error}`}
+                  <li>• Copy your Publishable key (pk_test_...) and Secret key (sk_test_...)</li>
                 </div>
               )}
             </div>
