@@ -400,11 +400,6 @@ export default function InvoiceDetail() {
                     </div>
                     {activityItem.type === 'commented' ? (
                       <>
-                        <img
-                          alt=""
-                          src={activityItem.person.imageUrl}
-                          className="relative mt-3 size-6 flex-none rounded-full bg-gray-50"
-                        />
                         <Image
                           alt=""
                           src={activityItem.person.imageUrl}
@@ -448,11 +443,6 @@ export default function InvoiceDetail() {
 
               {/* New comment form */}
               <div className="mt-6 flex gap-x-3">
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  className="size-6 flex-none rounded-full bg-gray-50"
-                />
                 <Image
                   alt=""
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
