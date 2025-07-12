@@ -73,32 +73,33 @@ function Plan({
   return (
     <section
       className={clsx(
-        'flex flex-col rounded-3xl px-6 sm:px-8',
-        featured ? 'order-first bg-orange-600 py-8 lg:order-none' : 'lg:py-8',
+        'flex flex-col rounded-3xl px-6 sm:px-8 bg-white shadow-xl',
+        featured 
+          ? 'order-first py-8 lg:order-none ring-2 ring-orange-400 shadow-2xl transform scale-105' 
+          : 'py-8 shadow-lg hover:shadow-xl transition-shadow duration-300',
       )}
     >
-      <h3 className="mt-5 font-display text-lg text-white">{name}</h3>
+      <h3 className="mt-5 font-display text-lg font-semibold text-slate-900">{name}</h3>
       <p
         className={clsx(
           'mt-2 text-base',
-          featured ? 'text-white' : 'text-slate-400',
+          'text-slate-600 leading-relaxed',
         )}
       >
         {description}
       </p>
-      <p className="order-first font-display text-5xl font-light tracking-tight text-white">
+      <p className="order-first font-display text-5xl font-bold tracking-tight text-slate-900">
         {price}
       </p>
       <ul
         role="list"
         className={clsx(
-          'order-last mt-10 flex flex-col gap-y-3 text-sm',
-          featured ? 'text-white' : 'text-slate-200',
+          'order-last mt-10 flex flex-col gap-y-3 text-sm text-slate-700',
         )}
       >
         {features.map((feature) => (
           <li key={feature} className="flex">
-            <CheckIcon className={featured ? 'text-white' : 'text-slate-400'} />
+            <CheckIcon className="text-green-500 flex-shrink-0" />
             <span className="ml-4">{feature}</span>
           </li>
         ))}
@@ -107,10 +108,10 @@ function Plan({
         priceId={priceId}
         mode={mode}
         className={clsx(
-          'mt-8',
+          'mt-8 w-full py-3 px-6 rounded-lg font-semibold text-base transition-all duration-200',
           featured 
-            ? 'bg-white text-orange-600 hover:bg-gray-50' 
-            : 'border border-white text-white hover:bg-white hover:text-slate-900'
+            ? 'bg-orange-600 text-white hover:bg-orange-700 hover:shadow-lg transform hover:scale-105' 
+            : 'bg-orange-600 text-white hover:bg-orange-700 hover:shadow-md'
         )}
       >
         Get started
@@ -167,7 +168,7 @@ export function Pricing() {
           </h3>
           <div className="grid max-w-4xl mx-auto grid-cols-1 gap-6 md:grid-cols-2">
             {products.filter(p => !p.name.includes('BoltBridge') && !p.name.includes('Website Management')).map((product) => (
-              <div key={product.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <div key={product.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <h4 className="font-display text-lg text-slate-900 mb-2">{product.name}</h4>
                 <p className="text-slate-600 text-sm mb-4">{product.description}</p>
                 <div className="flex items-center justify-between">
@@ -177,7 +178,7 @@ export function Pricing() {
                   <CheckoutButton
                     priceId={product.priceId}
                     mode={product.mode}
-                    className="bg-orange-600 text-white hover:bg-orange-700"
+                    className="bg-orange-600 text-white hover:bg-orange-700 px-4 py-2 rounded-lg font-semibold transition-all duration-200 hover:shadow-md"
                   >
                     {product.mode === 'subscription' ? 'Subscribe' : 'Purchase'}
                   </CheckoutButton>
