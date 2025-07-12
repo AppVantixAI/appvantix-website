@@ -1,11 +1,11 @@
 import Stripe from 'stripe'
 
 // Public key for client-side Stripe (required)
-export const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+export const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 
-// Validate required client-side environment variables
-if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
-  throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is required')
+// Only validate in runtime, not during build
+if (typeof window !== 'undefined' && !stripePublishableKey) {
+  console.warn('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not configured')
 }
 
 // Server-side configuration (optional for build time)
@@ -14,7 +14,7 @@ export const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
 // Create Stripe instance only if secret key is available
 export const stripe = stripeSecretKey ? new Stripe(stripeSecretKey, {
-  apiVersion: '2024-12-18.acacia',
+  apiVersion: '2025-06-30.basil',
   appInfo: {
     name: 'AppVantix',
     version: '1.0.0',
@@ -35,4 +35,12 @@ export function getWebhookSecret(): string {
     throw new Error('Stripe webhook secret is not available. Please set STRIPE_WEBHOOK_SECRET environment variable.')
   }
   return webhookSecret
+}
+
+// Helper function to get publishable key with error handling
+export function getStripePublishableKey(): string {
+  if (!stripePublishableKey) {
+    throw new Error('Stripe publishable key is not available. Please set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable.')
+  }
+  return stripePublishableKey
 }

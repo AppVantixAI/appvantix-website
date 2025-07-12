@@ -1,13 +1,31 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env.local file.')
+// Only validate in runtime, not during build
+if (typeof window !== 'undefined' && (!supabaseUrl || !supabaseAnonKey)) {
+  console.warn('Supabase environment variables are not configured')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create client with fallback values for build time
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co', 
+  supabaseAnonKey || 'placeholder-key'
+)
+
+// Helper function to check if Supabase is properly configured
+export function isSupabaseConfigured(): boolean {
+  return !!(supabaseUrl && supabaseAnonKey)
+}
+
+// Helper function to get configured Supabase client
+export function getSupabaseClient() {
+  if (!isSupabaseConfigured()) {
+    throw new Error('Supabase is not properly configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.')
+  }
+  return supabase
+}
 
 // Updated TypeScript types generated from appvantix-main Supabase database
 export type Json =

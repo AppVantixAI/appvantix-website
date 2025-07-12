@@ -1,4 +1,4 @@
-import { stripe } from './config'
+import { getStripeInstance } from './config'
 import Stripe from 'stripe'
 
 export interface DashboardStats {
@@ -37,6 +37,9 @@ export interface TransactionData {
 
 export async function getDashboardStats(): Promise<DashboardStats> {
   try {
+    // Get Stripe instance
+    const stripe = getStripeInstance()
+    
     // Get current period (last 30 days)
     const now = new Date()
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
@@ -133,6 +136,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
 export async function getTopCustomers(limit: number = 10): Promise<CustomerData[]> {
   try {
+    const stripe = getStripeInstance()
+    
     const customers = await stripe.customers.list({
       limit,
       expand: ['data.subscriptions'],
@@ -189,6 +194,8 @@ export async function getTopCustomers(limit: number = 10): Promise<CustomerData[
 
 export async function getRecentTransactions(limit: number = 20): Promise<TransactionData[]> {
   try {
+    const stripe = getStripeInstance()
+    
     const charges = await stripe.charges.list({
       limit,
       expand: ['data.customer'],
@@ -198,12 +205,11 @@ export async function getRecentTransactions(limit: number = 20): Promise<Transac
       id: charge.id,
       customer: typeof charge.customer === 'string' 
         ? charge.customer 
-        : charge.customer?.email || 'Unknown',
+        : (charge.customer && 'email' in charge.customer) ? charge.customer.email || 'Unknown' : 'Unknown',
       amount: charge.amount / 100,
       status: charge.status,
       date: new Date(charge.created * 1000).toISOString(),
       description: charge.description || 'Payment',
-      invoice: charge.invoice as string || undefined,
     }))
   } catch (error) {
     console.error('Error fetching recent transactions:', error)
@@ -225,6 +231,8 @@ export async function createCheckoutSession({
   cancelUrl: string
 }): Promise<Stripe.Checkout.Session> {
   try {
+    const stripe = getStripeInstance()
+    
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
@@ -258,6 +266,8 @@ export async function createCustomer({
   metadata?: Record<string, string>
 }): Promise<Stripe.Customer> {
   try {
+    const stripe = getStripeInstance()
+    
     const customer = await stripe.customers.create({
       email,
       name,
@@ -273,6 +283,8 @@ export async function createCustomer({
 
 export async function getCustomerPortalUrl(customerId: string, returnUrl: string): Promise<string> {
   try {
+    const stripe = getStripeInstance()
+    
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: returnUrl,
