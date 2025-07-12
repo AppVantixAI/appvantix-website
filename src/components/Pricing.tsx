@@ -72,32 +72,32 @@ function Plan({
   return (
     <section
       className={clsx(
-        'flex flex-col rounded-3xl px-6 sm:px-8',
-        featured ? 'order-first bg-orange-600 py-8 lg:order-none' : 'lg:py-8',
+        'flex flex-col rounded-3xl px-6 sm:px-8 bg-white shadow-lg',
+        featured ? 'order-first ring-2 ring-white py-8 lg:order-none' : 'py-8',
       )}
     >
-      <h3 className="mt-5 font-display text-lg text-white">{name}</h3>
+      <h3 className="mt-5 font-display text-lg text-slate-900">{name}</h3>
       <p
         className={clsx(
           'mt-2 text-base',
-          featured ? 'text-white' : 'text-slate-400',
+          'text-slate-600',
         )}
       >
         {description}
       </p>
-      <p className="order-first font-display text-5xl font-light tracking-tight text-white">
+      <p className="order-first font-display text-5xl font-light tracking-tight text-slate-900">
         {price}
       </p>
       <ul
         role="list"
         className={clsx(
           'order-last mt-10 flex flex-col gap-y-3 text-sm',
-          featured ? 'text-white' : 'text-slate-200',
+          'text-slate-700',
         )}
       >
         {features.map((feature) => (
           <li key={feature} className="flex">
-            <CheckIcon className={featured ? 'text-white' : 'text-slate-400'} />
+            <CheckIcon className="text-green-500" />
             <span className="ml-4">{feature}</span>
           </li>
         ))}
@@ -107,9 +107,7 @@ function Plan({
         mode={mode}
         className={clsx(
           'mt-8',
-          featured 
-            ? 'bg-white text-orange-600 hover:bg-gray-50' 
-            : 'border border-white text-white hover:bg-white hover:text-slate-900'
+          'bg-orange-600 text-white hover:bg-orange-700'
         )}
       >
         Get started
@@ -128,22 +126,23 @@ export function Pricing() {
     <section
       id="pricing"
       aria-label="Pricing"
-      className="bg-white py-20 sm:py-32"
+      className="bg-gradient-to-r from-orange-600 to-red-600 py-20 sm:py-32"
     >
       <Container>
         <div className="md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
             <span className="relative whitespace-nowrap">
-              <SwirlyDoodle className="absolute top-1/2 left-0 h-[1em] w-full fill-orange-300/70" />
-              <span className="relative text-slate-900">AI-powered solutions,</span>
+              <SwirlyDoodle className="absolute top-1/2 left-0 h-[1em] w-full fill-white/30" />
+              <span className="relative text-white">AI-powered solutions,</span>
             </span>{' '}
-            <span className="text-slate-900">for every business.</span>
+            <span className="text-white">for every business.</span>
           </h2>
           <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-4 text-lg text-orange-100">
             From individual productivity tools to enterprise AI solutions, we have the right package for your needs.
           </p>
         </div>
-        <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8 bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-8">
+        <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           {mainProducts.slice(0, 3).map((product, index) => (
             <Plan
               key={product.id}
@@ -160,7 +159,7 @@ export function Pricing() {
         
         {/* Additional products section */}
         <div className="mt-16">
-          <h3 className="text-center font-display text-2xl tracking-tight text-slate-900 mb-8">
+          <h3 className="text-center font-display text-2xl tracking-tight text-white mb-8">
             Additional Services
           </h3>
           <div className="grid max-w-4xl mx-auto grid-cols-1 gap-6 md:grid-cols-2">
